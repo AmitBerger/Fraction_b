@@ -21,31 +21,32 @@ public:
   Fraction(float num);
 
   Fraction operator+(const Fraction &other);
-  friend Fraction operator+(const float &f, const Fraction &frac) {
-    float num = frac.numerator + f * frac.denominator;
-    float denom = frac.denominator;
+  friend Fraction operator+(const float &flo_num, const Fraction &frac) {
+    float num = (float)frac.numerator + flo_num * (float)frac.denominator;
+    float denom = (float)frac.denominator;
     return Fraction(num, denom);
   }
 
   Fraction operator-(const Fraction &other);
-  friend Fraction operator-(const float &f, const Fraction &frac) {
-    float num = f * frac.denominator - frac.numerator;
-    float denom = frac.denominator;
+  friend Fraction operator-(const float &flo_num, const Fraction &frac) {
+    float num = flo_num * (float)frac.denominator - (float)frac.numerator;
+    float denom = (float)frac.denominator;
     return Fraction(num, denom);
   }
 
   Fraction operator*(const Fraction &other);
-  friend Fraction operator*(float f, const Fraction &frac) {
-    float num = f * frac.numerator;
-    return Fraction(num);
+  friend Fraction operator*(float flo_num, const Fraction &frac) {
+    float num = flo_num * (float)frac.numerator;
+    float denom = (float)frac.denominator;
+    return Fraction(num, denom);
   }
   Fraction operator/(const Fraction &other);
-  friend Fraction operator/(const float &f, const Fraction &frac) {
+  friend Fraction operator/(const float &flo_num, const Fraction &frac) {
     if (frac.numerator == 0) {
-      throw   "Error: cannot divide by zero.";
+      throw "Error: cannot divide by zero.";
       return frac;
     }
-    float result = f / (float)frac.numerator * frac.denominator;
+    float result = flo_num / (float)frac.numerator * (float)frac.denominator;
     return Fraction(result);
   }
 

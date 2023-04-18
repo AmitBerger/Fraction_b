@@ -17,6 +17,11 @@ Fraction::Fraction(float num, float denom)
   if (denom == 0) {
     throw runtime_error("divided by zero!");
   }
+  int precision = 1000; // 3 digits beyond the decimal point
+  int numInt = round(num * precision);
+
+  numerator = numInt;
+  denominator = precision * denom;
   reduce();
 }
 
@@ -66,7 +71,6 @@ bool Fraction::operator==(const Fraction &other) const {
 bool Fraction::operator!=(const Fraction &other) const {
   return !(*this == other);
 }
-
 
 bool Fraction::operator>(const Fraction &other) const {
   return numerator * other.denominator > other.numerator * denominator;
