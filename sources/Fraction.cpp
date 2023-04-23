@@ -139,11 +139,11 @@ void Fraction::reduce() {
   denominator = denominator / divisor;
 }
 
-int Fraction::gcd(int a, int b) {
-  if (b == 0) {
-    return a;
+int Fraction::gcd(int num, int denom) {
+  if (denom == 0) {
+    return num;
   }
-  return gcd(b, a % b);
+  return gcd(denom, num % denom);
 }
 int Fraction::getNumerator() { return this->numerator; }
 int Fraction::getDenominator() { return this->denominator; }

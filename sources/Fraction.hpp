@@ -12,7 +12,7 @@ private:
   int denominator;
 
   void reduce();
-  int gcd(int abra, int babra);
+  int gcd(int num, int denom);
 
 public:
   Fraction();
