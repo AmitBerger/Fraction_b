@@ -1,6 +1,10 @@
 #include "Fraction.hpp"
 
+#include <climits>
+// #include <algorithm>
 #include <cmath>
+#include <iostream>
+#include <limits>
 #include <stdexcept>
 using namespace ariel;
 using namespace std;
@@ -8,7 +12,7 @@ Fraction::Fraction() : numerator(0), denominator(1) {}
 
 Fraction::Fraction(int num, int denom) : numerator(num), denominator(denom) {
   if (denom == 0) {
-    throw runtime_error("divided by zero!");
+    throw invalid_argument("divided by zero!");
   }
   reduce();
 }
@@ -35,6 +39,13 @@ Fraction::Fraction(float num) {
 }
 
 Fraction Fraction::operator+(const Fraction &other) {
+  if ((long long)numerator * other.denominator + other.numerator * denominator >
+          numeric_limits<int>::max() ||
+      (long long)numerator * other.denominator + other.numerator * denominator <
+          numeric_limits<int>::min() ||
+      (long long)denominator * other.denominator > numeric_limits<int>::max()) {
+    throw overflow_error("Invalid");
+  }
   float num = numerator * other.denominator + other.numerator * denominator;
   float denom = denominator * other.denominator;
   reduce();
@@ -42,24 +53,40 @@ Fraction Fraction::operator+(const Fraction &other) {
 }
 
 Fraction Fraction::operator-(const Fraction &other) {
+  if ((long long)numerator * other.denominator - other.numerator * denominator >
+          numeric_limits<int>::max() ||
+      (long long)denominator * other.denominator > numeric_limits<int>::max()) {
+    throw overflow_error("Invalid");
+  }
   float num = numerator * other.denominator - other.numerator * denominator;
   float denom = denominator * other.denominator;
-  reduce();
+  // reduce();
   return Fraction(num, denom);
 }
 
 Fraction Fraction::operator*(const Fraction &other) {
-
-  float num = numerator * other.numerator;
-  float denom = denominator * other.denominator;
-  reduce();
+  if ((long long)numerator * other.numerator > numeric_limits<int>::max() ||
+      (long long)denominator * other.denominator > numeric_limits<int>::max()) {
+    throw overflow_error("Invalid");
+  }
+  int num = numerator * other.numerator;
+  int denom = denominator * other.denominator;
+  // reduce();
   return Fraction(num, denom);
 }
 
 Fraction Fraction::operator/(const Fraction &other) {
+  if (other.numerator == 0 || other.denominator == 0) {
+    throw runtime_error("divided by zero!");
+  }
+  if ((long long)numerator * other.denominator > numeric_limits<int>::max() ||
+      (long long)denominator * other.numerator > numeric_limits<int>::max()) {
+    throw overflow_error("Invalid");
+  }
+
   int num = numerator * other.denominator;
   int denom = denominator * other.numerator;
-  reduce();
+  // reduce();
 
   return Fraction(num, denom);
 }

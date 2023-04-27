@@ -2,6 +2,7 @@
 #define FRACTION_H
 
 #include <iostream>
+#include <stdexcept>
 #include <unistd.h>
 using namespace std;
 namespace ariel {
@@ -46,16 +47,64 @@ public:
       throw "Error: cannot divide by zero.";
       return frac;
     }
-    float result = flo_num / (float)frac.numerator * (float)frac.denominator;
-    return Fraction(result);
+    Fraction flo_Frac(flo_num);
+    float num= (float)(flo_Frac.numerator*frac.denominator);
+    float denom= (float)(flo_Frac.denominator*frac.numerator);
+    return Fraction(num,denom);
   }
 
   bool operator==(const Fraction &other) const;
+   friend bool operator==(float flo_num, const Fraction &frac) {
+    Fraction num(flo_num);
+    return (num == frac);
+  }
+  friend bool operator==(const Fraction &frac, float flo_num) {
+    Fraction num(flo_num);
+    return (num == frac);
+  }
   bool operator!=(const Fraction &other) const;
+
   bool operator>(const Fraction &other) const;
+  friend bool operator>(float flo_num, const Fraction &frac) {
+    Fraction num(flo_num);
+    return (num > frac);
+  }
+   friend bool operator>(const Fraction &frac, float flo_num) {
+    Fraction num(flo_num);
+    return (frac > num);
+  }
+
   bool operator<(const Fraction &other) const;
+   friend bool operator<(float flo_num, const Fraction &frac) {
+    Fraction num(flo_num);
+    return (num < frac);
+  }
+  friend bool operator<(const Fraction &frac, float flo_num) {
+    Fraction num(flo_num);
+    return (frac < num);
+  }
+
   bool operator>=(const Fraction &other) const;
+  friend bool operator>=(float flo_num, const Fraction &frac) {
+    Fraction num(flo_num);
+    return (num >= frac);
+  }
+  friend bool operator>=(const Fraction &frac, float flo_num) {
+    Fraction num(flo_num);
+    return (frac >= num);
+  }
+
   bool operator<=(const Fraction &other) const;
+  friend bool operator<=(float flo_num, const Fraction &frac) {
+    Fraction num(flo_num);
+    return (num <= frac);
+  }
+  friend bool operator<=(const Fraction &frac, float flo_num) {
+    Fraction num(flo_num);
+    return (frac <= num);
+  }
+
+ 
 
   Fraction &operator++();   // pre-increment
   Fraction operator++(int); // post-increment
@@ -66,25 +115,24 @@ public:
     ostr << frac.numerator << "/" << frac.denominator;
     return ostr;
   }
-
   friend istream &operator>>(istream &istr, Fraction &frac) {
     int num = 0;
     int denom = 1;
-    char slash = '/';
 
-    istr >> num >> slash >> denom;
-
-    if (denom == 0) {
-      throw "Error: denominator cannot be zero.";
-      return istr;
+    if (!(istr >> num >> denom)) {
+      throw runtime_error("Invalid input format");
     }
 
-    frac.numerator = num;
-    frac.denominator = denom;
+    if (denom == 0) {
+      throw runtime_error("Divide by zero");
+    }
+
+    frac = Fraction(num, denom);
     frac.reduce();
 
     return istr;
   }
+
   int getNumerator();
   int getDenominator();
 };
