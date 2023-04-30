@@ -147,7 +147,7 @@ TEST_CASE("reduce method") {
 }
 TEST_CASE("Fraction input operator >>") {
   Fraction frac;
-  stringstream input("3/4");
+  stringstream input("3 4");
 
   input >> frac;
 
@@ -176,27 +176,27 @@ TEST_CASE("Fraction output operator <<") {
 
   CHECK(output.str() == "3/4");
 
-  istringstream iss1{"1/2"};
+  istringstream iss1{"1 2"};
   iss1 >> f1;
   CHECK(f1 == Fraction(1, 2));
 
-  istringstream iss2{"2/3"};
+  istringstream iss2{"2 3"};
   iss2 >> f2;
   CHECK(f2 == Fraction(2, 3));
 
-  istringstream iss3{"-1/2"};
+  istringstream iss3{"-1 2"};
   iss3 >> f3;
   CHECK(f3 == Fraction(-1, 2));
 
-  istringstream iss4{"1/-2"};
+  istringstream iss4{"1 -2"};
   iss4 >> f4;
   CHECK(f4 == Fraction(-1, 2));
 
-  istringstream iss5{"-1/-2"};
+  istringstream iss5{"-1 -2"};
   iss5 >> f5;
   CHECK(f5 == Fraction(1, 2));
 
-  istringstream iss6{"0/5"};
+  istringstream iss6{"0 5"};
   iss6 >> f6;
   CHECK(f6 == Fraction(0, 1));
 }
@@ -252,12 +252,12 @@ TEST_CASE("Negative Fractions") {
   CHECK_EQ(f3.getNumerator(), 7);
   CHECK_EQ(f3.getDenominator(), 8);
 
-  stringstream ss1("-4/5");
+  stringstream ss1("-4 5");
   ss1 >> f4;
   CHECK_EQ(f4.getNumerator(), -4);
   CHECK_EQ(f4.getDenominator(), 5);
 
-  stringstream ss2("3/-2");
+  stringstream ss2("3 -2");
   ss2 >> f4;
   CHECK_EQ(f4.getNumerator(), -3);
   CHECK_EQ(f4.getDenominator(), 2);

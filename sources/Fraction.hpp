@@ -48,13 +48,13 @@ public:
       return frac;
     }
     Fraction flo_Frac(flo_num);
-    float num= (float)(flo_Frac.numerator*frac.denominator);
-    float denom= (float)(flo_Frac.denominator*frac.numerator);
-    return Fraction(num,denom);
+    float num = (float)(flo_Frac.numerator * frac.denominator);
+    float denom = (float)(flo_Frac.denominator * frac.numerator);
+    return Fraction(num, denom);
   }
 
   bool operator==(const Fraction &other) const;
-   friend bool operator==(float flo_num, const Fraction &frac) {
+  friend bool operator==(float flo_num, const Fraction &frac) {
     Fraction num(flo_num);
     return (num == frac);
   }
@@ -69,13 +69,13 @@ public:
     Fraction num(flo_num);
     return (num > frac);
   }
-   friend bool operator>(const Fraction &frac, float flo_num) {
+  friend bool operator>(const Fraction &frac, float flo_num) {
     Fraction num(flo_num);
     return (frac > num);
   }
 
   bool operator<(const Fraction &other) const;
-   friend bool operator<(float flo_num, const Fraction &frac) {
+  friend bool operator<(float flo_num, const Fraction &frac) {
     Fraction num(flo_num);
     return (num < frac);
   }
@@ -103,9 +103,6 @@ public:
     Fraction num(flo_num);
     return (frac <= num);
   }
-
- 
-
   Fraction &operator++();   // pre-increment
   Fraction operator++(int); // post-increment
   Fraction &operator--();   // pre-decrement
