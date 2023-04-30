@@ -92,7 +92,10 @@ Fraction Fraction::operator/(const Fraction &other) {
 }
 
 bool Fraction::operator==(const Fraction &other) const {
-  return numerator == other.numerator && denominator == other.denominator;
+  Fraction temp1((float)numerator / denominator);
+  Fraction temp2((float)other.numerator / other.denominator);
+  return temp1.numerator == temp2.numerator && temp1.denominator == temp2.denominator;
+  // return numerator == other.numerator && denominator == other.denominator;
 }
 
 bool Fraction::operator!=(const Fraction &other) const {
